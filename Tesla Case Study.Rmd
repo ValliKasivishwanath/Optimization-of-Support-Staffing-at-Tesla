@@ -1,0 +1,255 @@
+---
+title: "Optimization of Support Staffing at Tesla"
+author: "Valli Kasivishwanath,Gandhimathi Gandhinathan,Yasmeen Gavande"
+date: "2023-12-08"
+output: html_document
+---
+
+**Background**
+Tesla, renowned for its innovative electric vehicles and sustainable energy solutions, faces a critical challenge in managing its customer service operations effectively. With a rapidly growing customer base, the company must ensure that its support services are not only efficient but also reflect the high standards of the brand. Tesla's customer service is tasked with handling technical queries, software updates, and general customer inquiries, necessitating a team that is proficient, responsive, and technically knowledgeable. The focus is not just on resolving issues but also on enhancing the overall customer experience, aligning with Tesla's reputation for innovation and customer satisfaction.
+
+**Purpose**
+The primary goal of this report is to devise an optimized staffing strategy for Tesla's customer service department. This involves developing a model that minimizes operational costs while ensuring all customer calls are efficiently addressed. The report seeks to balance the demand for customer support, particularly with the launch of new models like the Model E1, against the cost implications of staffing. By analyzing call volumes, agent efficiency, and shift patterns, the report aims to recommend a staffing structure that aligns with Tesla's commitment to excellence in customer service and operational efficiency. The overarching objective is to maintain high service standards while strategically managing resource allocation and costs.
+
+**Methodology**
+**Mathematical Models**
+This report employs mathematical modeling to optimize staffing configurations. The models consider various factors like call volumes, agent efficiency, and wage structures to find the most cost-effective staffing solution while maintaining service quality.
+
+**Agent Efficiency Model**
+In the efficiency model, agents are assumed to handle six calls per hour. This rate forms the basis for calculating the number of agents required in each time slot, ensuring that the forecasted call volume is adequately managed.
+
+**Wage Calculation**
+Wages are calculated based on the type of agent (full-time or part-time) and their language skills (English or Spanish speaking). The model differentiates between standard and overtime pay rates, depending on the time slots in which the agents are scheduled to work.
+
+**UNDERLYING ASSUMPTIONS**: 
+
+1)**Consistent Agent Efficiency**: It is assumed that all agents, regardless of their full-time or part-time status, handle calls at a constant rate of six calls per hour. This uniform efficiency is a key factor in determining staffing needs.
+
+2)**Shift Structure and Effectiveness**: 
+- Full-time agents are effective in call handling for only half of their 8-hour shift, with the remaining time allocated for other tasks.
+- Part-time agents are assumed to be actively handling calls during their entire 4-hour shift without breaks for other duties.
+
+3)**Language Skills Distribution**: The model presupposes a certain distribution of language skills among the agents, with some agents proficient in English, others in Spanish, and a consideration for bilingual agents in later scenarios.
+
+4)**Wage Rates**: The analysis is based on the assumption that wages are fixed at $30 per hour before 5 P.M. and $45 per hour afterward, applicable to all agents regardless of their language skills or full-time/part-time status.
+
+5)**Call Volume Predictability**: The model relies on the assumption that call volumes are predictable and follow the forecast pattern provided. It assumes these volumes remain consistent for the purpose of the analysis.
+
+6)**No Overlapping Shifts**: The model assumes that shifts do not overlap and that each time slot is covered by a distinct set of agents.
+
+7)**Language-Based Call Distribution**: It is assumed that 20% of calls require Spanish-speaking agents, reflecting the demographic diversity of Tesla’s customer base.
+
+8)**Single Constraint Adaptation**: In scenarios with constraints (like limited availability of English-speaking agents in certain time slots), it's assumed that these constraints are the only deviations from the norm, and all other aspects of the operation remain as initially planned.
+
+**Questions**
+
+a)How many full-time English-speaking agents, full-time Spanish-speaking agents, and
+part-time agents should Alex hire for each 2-hour shift to minimize operating costs
+while attending to all calls? 
+Full-Time English-Speaking Agents Needed for Each 2-Hour Shift:
+
+7 A.M. – 9 A.M.: 2 agents, 
+ 9 A.M. – 11 A.M.: 4 agents, 
+ 11 A.M. – 1 P.M.: 3 agents, 
+ 1 P.M. – 3 P.M.: 4 agents, 
+ 3 P.M. – 5 P.M.: 4 agents,
+ 5 P.M. – 7 P.M.: 2 agents,
+ 7 P.M. – 9 P.M.: 1 agent.
+
+Full-Time Spanish-Speaking Agents Needed for Each 2-Hour Shift:
+
+7 A.M. – 9 A.M.: 2 agents
+ 9 A.M. – 11 A.M.: 4 agents
+ 11 A.M. – 1 P.M.: 3 agents
+ 1 P.M. – 3 P.M.: 4 agents
+ 3 P.M. – 5 P.M.: 3 agents
+ 5 P.M. – 7 P.M.: 1 agent
+ 7 P.M. – 9 P.M.: 0 agents
+
+b)What is the minimum cost for the optimization model to assist Alex’s decision in
+hiring all agents that she needs? 
+
+```{r Part a,b, echo = FALSE, message=FALSE, comment = " " ,warning=FALSE}
+# Define the hourly call forecast data
+call_forecast <- c(40, 85, 70, 95, 80, 35, 10)
+
+# Agent efficiency (calls per hour)
+agent_efficiency <- 6
+
+# Calculate the number of agents needed for each 2-hour shift
+# Full-time agents work effectively for half their shift, part-time agents for their entire shift
+full_time_agents_needed <- ceiling(call_forecast / agent_efficiency / 2)
+part_time_agents_needed <- c(ceiling(sum(call_forecast[5:6]) / agent_efficiency),
+                             ceiling(sum(call_forecast[6:7]) / agent_efficiency))
+
+# Splitting full-time agents into English and Spanish speakers
+full_time_english_agents <- ceiling(full_time_agents_needed / 2)
+full_time_spanish_agents <- floor(full_time_agents_needed / 2)
+
+# Wage rates
+wage_before_5pm <- 30
+wage_after_5pm <- 45
+
+# Calculate the cost for full-time and part-time agents
+cost_full_time <- sum(full_time_english_agents[1:4] * wage_before_5pm * 2) +
+  sum(full_time_spanish_agents[1:4] * wage_before_5pm * 2) +
+  sum(full_time_english_agents[5:7] * wage_after_5pm * 2) +
+  sum(full_time_spanish_agents[5:7] * wage_after_5pm * 2)
+
+cost_part_time <- part_time_agents_needed[1] * wage_before_5pm * 4 +
+  part_time_agents_needed[2] * wage_after_5pm * 4
+
+# Total cost
+total_cost <- cost_full_time + cost_part_time
+
+# Output the results
+list(
+  full_time_english_agents = full_time_english_agents,
+  full_time_spanish_agents = full_time_spanish_agents,
+  part_time_agents_needed = part_time_agents_needed,
+  total_cost = total_cost)
+
+```
+**Questions**
+
+c)How many full-time English-speaking agents, full-time Spanish-speaking agents, and
+part-time agents should Alex hire for each 2-hour shift to minimize operating costs
+while attending to all calls? 
+
+d)What is the minimum cost for the optimization model to assist Alex’s decision in
+hiring all agents that she needs? 
+
+```{r Part c,d, echo= FALSE, message=FALSE, comment = " " ,warning=FALSE}
+# Define the hourly call forecast data
+call_forecast <- c(40, 85, 70, 95, 80, 35, 10)
+
+# Agent efficiency (calls per hour)
+agent_efficiency <- 6
+
+# Original full-time agents needed (sum of English and Spanish agents)
+full_time_agents_needed <- ceiling(call_forecast / agent_efficiency / 2)
+
+# Adjusting for the constraint: Only one English-speaking agent at 1 P.M. and 3 P.M.
+full_time_english_agents_adjusted <- full_time_agents_needed
+full_time_english_agents_adjusted[c(4, 5)] <- 1
+
+# Calculating the number of Spanish-speaking agents needed
+full_time_spanish_agents <- full_time_agents_needed - full_time_english_agents_adjusted
+
+# Part-time agents needed
+part_time_agents_needed <- c(ceiling(sum(call_forecast[5:6]) / agent_efficiency),
+                             ceiling(sum(call_forecast[6:7]) / agent_efficiency))
+
+# Wage rates
+wage_before_5pm <- 30
+wage_after_5pm <- 45
+
+# Calculate the adjusted total cost
+cost_full_time_adjusted <- sum(full_time_english_agents_adjusted[1:4] * wage_before_5pm * 2) +
+                          sum(full_time_spanish_agents[1:4] * wage_before_5pm * 2) +
+                          sum(full_time_english_agents_adjusted[5:7] * wage_after_5pm * 2) +
+                          sum(full_time_spanish_agents[5:7] * wage_after_5pm * 2)
+cost_part_time <- part_time_agents_needed[1] * wage_before_5pm * 4 +
+                  part_time_agents_needed[2] * wage_after_5pm * 4
+total_cost_adjusted <- cost_full_time_adjusted + cost_part_time
+
+# Output the results
+list(
+  full_time_english_agents_adjusted = full_time_english_agents_adjusted,
+  full_time_spanish_agents = full_time_spanish_agents,
+  part_time_agents_needed = part_time_agents_needed,
+  total_cost_adjusted = total_cost_adjusted
+)
+```
+**Questions**
+
+e)How many full-time and part-time agents should Alex hire for each 2-hour shift to
+minimize operating costs while attending to all calls? 
+
+```{r Part e, echo = FALSE, message=FALSE, comment = " " ,warning=FALSE}
+# All agents are bilingual, so we don't need to separate them into languages
+full_time_bilingual_agents_needed <- ceiling(call_forecast / agent_efficiency / 2)
+
+list(full_time_bilingual_agents_needed = full_time_bilingual_agents_needed)
+
+```
+**Questions**
+
+f)What is the minimum cost for the optimization model to assist Alex’s decision in hiring all agents that she needs? 
+
+```{r Part f, echo = FALSE, message=FALSE, comment = " " ,warning=FALSE}
+# minimum cost 
+full_time_cost_before <-full_time_bilingual_agents_needed[0:4] * 30 
+overtime_full_time_cost_before <- full_time_bilingual_agents_needed[5:6] * 45 
+
+print(full_time_cost_before)
+print(overtime_full_time_cost_before)
+total <- sum(full_time_cost_before) + sum(overtime_full_time_cost_before)
+print(total)
+```
+**Questions**
+
+g) What is the maximum percentage increase in the hourly wage rate that Alex can offer to bilingual agents over monolingual agents without increasing the total operating costs?
+
+
+```{r Part g, echo = FALSE, message=FALSE, comment = " " ,warning=FALSE}
+# Define the hourly call forecast data
+call_forecast <- c(40, 85, 70, 95, 80, 35, 10)
+
+# Agent efficiency (calls per hour)
+agent_efficiency <- 6
+
+# Wage rates
+wage_before_5pm <- 30
+wage_after_5pm <- 45
+
+# Calculate the cost for full-time bilingual agents
+full_time_bilingual_agents_needed <- ceiling(call_forecast / agent_efficiency / 2)
+cost_full_time_bilingual_before_5pm <- sum(full_time_bilingual_agents_needed[1:4] * wage_before_5pm * 2)
+overtime_cost_full_time_bilingual_after_5pm <- sum(full_time_bilingual_agents_needed[5:7] * wage_after_5pm * 2)
+
+# Calculate the cost for full-time monolingual agents
+cost_full_time_monolingual_before_5pm <- sum(full_time_bilingual_agents_needed[1:4] * wage_before_5pm * 2)
+overtime_cost_full_time_monolingual_after_5pm <- sum(full_time_bilingual_agents_needed[5:7] * wage_before_5pm * 2)
+
+# Calculate the total cost for bilingual agents and monolingual agents
+total_cost_bilingual <- cost_full_time_bilingual_before_5pm + overtime_cost_full_time_bilingual_after_5pm
+total_cost_monolingual <- cost_full_time_monolingual_before_5pm + overtime_cost_full_time_monolingual_after_5pm
+
+# Calculate the maximum percentage increase
+max_percentage_increase <- ((total_cost_bilingual - total_cost_monolingual) / total_cost_monolingual) * 100
+max_percentage_increase <- round(max_percentage_increase, 1)
+
+# Output the maximum percentage increase
+max_percentage_increase
+```
+
+
+**Interpretation of Results**
+The optimization results indicate a strategic approach for Tesla to handle its customer service call volume efficiently. By aligning the number of agents (both full-time and part-time) with the varying call volumes throughout the day, Tesla can ensure high-quality customer support while minimizing idle time for agents. The introduction of bilingual agents aligns with Tesla’s commitment to diversity and inclusivity, potentially enhancing customer satisfaction and brand loyalty in a multilingual market like Silicon Valley.
+
+**Limitations**
+The primary limitation of this analysis is the reliance on several key assumptions, such as constant call handling efficiency and fixed shift durations. Real-world scenarios may present fluctuating call volumes, varying agent efficiency, and unexpected staffing needs. Additionally, the model does not account for potential changes in call patterns or the dynamic nature of customer service requirements over time.
+
+**Recommendations**
+Based on the findings, the following recommendations are proposed:
+
+*Adaptable Staffing Strategies*: Develop a staffing strategy that is flexible and can adjust to changing call volumes and unexpected surges in demand.
+
+*Multilingual Agent Recruitment*: Focus on recruiting agents who are fluent in multiple languages to better serve a diverse clientele, thereby improving communication and customer satisfaction.
+
+*Ongoing Data Analysis*: Consistently evaluate call data to modify staffing plans according to evolving call trends.
+
+*Agent Skills Enhancement*: Commit to the ongoing training of agents to enhance their efficiency and versatility, including their language skills and technical competencies.
+
+*Feedback Implementation*: Set up systems to gather and utilize feedback from customers and agents to continually improve the customer service process.
+
+*Utilizing Advanced Technology*: Employ advanced technology solutions for effective call routing, particularly for connecting callers with agents who have the appropriate language skills and subject matter expertise.
+
+*Performance Monitoring and Adjustment*: Regularly assess the customer service department's performance using key indicators and make necessary strategic adjustments.
+
+**Conclusion**
+
+The analysis of Tesla's customer service strategy reveals a nuanced approach to staffing, emphasizing efficiency and responsiveness. Key findings suggest that a well-balanced mix of full-time, part-time, and bilingual agents, aligned with fluctuating call volumes, optimizes resource utilization while maintaining high service standards. The introduction of bilingual agents, catering to 20% non-English speaking customers, not only showcases Tesla's commitment to inclusivity but also significantly enhances customer engagement in a diverse market like Silicon Valley. This strategic approach underlines Tesla's dedication to exceptional service, a core aspect of its brand identity, and its broader mission of sustainable innovation.
+
+
