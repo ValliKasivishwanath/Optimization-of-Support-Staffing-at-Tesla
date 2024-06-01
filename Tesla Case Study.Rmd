@@ -5,7 +5,7 @@ date: "2023-12-08"
 output: html_document
 ---
 
-**Questions**
+Questions
 
 a)How many full-time English-speaking agents, full-time Spanish-speaking agents, and
 part-time agents should Alex hire for each 2-hour shift to minimize operating costs
@@ -74,7 +74,7 @@ list(
   total_cost = total_cost)
 
 ```
-**Questions**
+Questions
 
 c)How many full-time English-speaking agents, full-time Spanish-speaking agents, and
 part-time agents should Alex hire for each 2-hour shift to minimize operating costs
@@ -125,7 +125,7 @@ list(
   total_cost_adjusted = total_cost_adjusted
 )
 ```
-**Questions**
+Questions
 
 e)How many full-time and part-time agents should Alex hire for each 2-hour shift to
 minimize operating costs while attending to all calls? 
@@ -137,7 +137,7 @@ full_time_bilingual_agents_needed <- ceiling(call_forecast / agent_efficiency / 
 list(full_time_bilingual_agents_needed = full_time_bilingual_agents_needed)
 
 ```
-**Questions**
+Questions
 
 f)What is the minimum cost for the optimization model to assist Alex’s decision in hiring all agents that she needs? 
 
@@ -151,7 +151,7 @@ print(overtime_full_time_cost_before)
 total <- sum(full_time_cost_before) + sum(overtime_full_time_cost_before)
 print(total)
 ```
-**Questions**
+Questions
 
 g) What is the maximum percentage increase in the hourly wage rate that Alex can offer to bilingual agents over monolingual agents without increasing the total operating costs?
 
@@ -189,13 +189,13 @@ max_percentage_increase
 ```
 
 
-**Interpretation of Results**
+Interpretation of Results
 The optimization results indicate a strategic approach for Tesla to handle its customer service call volume efficiently. By aligning the number of agents (both full-time and part-time) with the varying call volumes throughout the day, Tesla can ensure high-quality customer support while minimizing idle time for agents. The introduction of bilingual agents aligns with Tesla’s commitment to diversity and inclusivity, potentially enhancing customer satisfaction and brand loyalty in a multilingual market like Silicon Valley.
 
-**Limitations**
+Limitations
 The primary limitation of this analysis is the reliance on several key assumptions, such as constant call handling efficiency and fixed shift durations. Real-world scenarios may present fluctuating call volumes, varying agent efficiency, and unexpected staffing needs. Additionally, the model does not account for potential changes in call patterns or the dynamic nature of customer service requirements over time.
 
-**Recommendations**
+Recommendations
 Based on the findings, the following recommendations are proposed:
 
 *Adaptable Staffing Strategies*: Develop a staffing strategy that is flexible and can adjust to changing call volumes and unexpected surges in demand.
@@ -212,8 +212,6 @@ Based on the findings, the following recommendations are proposed:
 
 *Performance Monitoring and Adjustment*: Regularly assess the customer service department's performance using key indicators and make necessary strategic adjustments.
 
-**Conclusion**
+Conclusion
 
 The analysis of Tesla's customer service strategy reveals a nuanced approach to staffing, emphasizing efficiency and responsiveness. Key findings suggest that a well-balanced mix of full-time, part-time, and bilingual agents, aligned with fluctuating call volumes, optimizes resource utilization while maintaining high service standards. The introduction of bilingual agents, catering to 20% non-English speaking customers, not only showcases Tesla's commitment to inclusivity but also significantly enhances customer engagement in a diverse market like Silicon Valley. This strategic approach underlines Tesla's dedication to exceptional service, a core aspect of its brand identity, and its broader mission of sustainable innovation.
-
-
