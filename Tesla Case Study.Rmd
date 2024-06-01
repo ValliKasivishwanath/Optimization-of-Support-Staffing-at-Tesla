@@ -1,6 +1,6 @@
 ---
 title: "Optimization of Support Staffing at Tesla"
-author: "Valli Kasivishwanath,Gandhimathi Gandhinathan,Yasmeen Gavande"
+author: "Valli Kasivishwanath"
 date: "2023-12-08"
 output: html_document
 ---
