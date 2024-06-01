@@ -5,42 +5,6 @@ date: "2023-12-08"
 output: html_document
 ---
 
-**Background**
-Tesla, renowned for its innovative electric vehicles and sustainable energy solutions, faces a critical challenge in managing its customer service operations effectively. With a rapidly growing customer base, the company must ensure that its support services are not only efficient but also reflect the high standards of the brand. Tesla's customer service is tasked with handling technical queries, software updates, and general customer inquiries, necessitating a team that is proficient, responsive, and technically knowledgeable. The focus is not just on resolving issues but also on enhancing the overall customer experience, aligning with Tesla's reputation for innovation and customer satisfaction.
-
-**Purpose**
-The primary goal of this report is to devise an optimized staffing strategy for Tesla's customer service department. This involves developing a model that minimizes operational costs while ensuring all customer calls are efficiently addressed. The report seeks to balance the demand for customer support, particularly with the launch of new models like the Model E1, against the cost implications of staffing. By analyzing call volumes, agent efficiency, and shift patterns, the report aims to recommend a staffing structure that aligns with Tesla's commitment to excellence in customer service and operational efficiency. The overarching objective is to maintain high service standards while strategically managing resource allocation and costs.
-
-**Methodology**
-**Mathematical Models**
-This report employs mathematical modeling to optimize staffing configurations. The models consider various factors like call volumes, agent efficiency, and wage structures to find the most cost-effective staffing solution while maintaining service quality.
-
-**Agent Efficiency Model**
-In the efficiency model, agents are assumed to handle six calls per hour. This rate forms the basis for calculating the number of agents required in each time slot, ensuring that the forecasted call volume is adequately managed.
-
-**Wage Calculation**
-Wages are calculated based on the type of agent (full-time or part-time) and their language skills (English or Spanish speaking). The model differentiates between standard and overtime pay rates, depending on the time slots in which the agents are scheduled to work.
-
-**UNDERLYING ASSUMPTIONS**: 
-
-1)**Consistent Agent Efficiency**: It is assumed that all agents, regardless of their full-time or part-time status, handle calls at a constant rate of six calls per hour. This uniform efficiency is a key factor in determining staffing needs.
-
-2)**Shift Structure and Effectiveness**: 
-- Full-time agents are effective in call handling for only half of their 8-hour shift, with the remaining time allocated for other tasks.
-- Part-time agents are assumed to be actively handling calls during their entire 4-hour shift without breaks for other duties.
-
-3)**Language Skills Distribution**: The model presupposes a certain distribution of language skills among the agents, with some agents proficient in English, others in Spanish, and a consideration for bilingual agents in later scenarios.
-
-4)**Wage Rates**: The analysis is based on the assumption that wages are fixed at $30 per hour before 5 P.M. and $45 per hour afterward, applicable to all agents regardless of their language skills or full-time/part-time status.
-
-5)**Call Volume Predictability**: The model relies on the assumption that call volumes are predictable and follow the forecast pattern provided. It assumes these volumes remain consistent for the purpose of the analysis.
-
-6)**No Overlapping Shifts**: The model assumes that shifts do not overlap and that each time slot is covered by a distinct set of agents.
-
-7)**Language-Based Call Distribution**: It is assumed that 20% of calls require Spanish-speaking agents, reflecting the demographic diversity of Tesla’s customer base.
-
-8)**Single Constraint Adaptation**: In scenarios with constraints (like limited availability of English-speaking agents in certain time slots), it's assumed that these constraints are the only deviations from the norm, and all other aspects of the operation remain as initially planned.
-
 **Questions**
 
 a)How many full-time English-speaking agents, full-time Spanish-speaking agents, and
